@@ -79,10 +79,10 @@ jobs:
 
     steps: # Defines the individual steps within the job
       - name: Checkout code # Step 1: Checkout code from the repository
-        uses: actions/checkout@v2 # Uses the actions/checkout GitHub action to clone the repository
+        uses: actions/checkout@v4 # Uses the actions/checkout GitHub action to clone the repository
 
       - name: Set up Node.js # Step 2: Set up Node.js environment
-        uses: actions/setup-node@v2 # Uses the actions/setup-node GitHub action to install Node.js
+        uses: actions/setup-node@v4 # Uses the actions/setup-node GitHub action to install Node.js
         with:
           node-version: ${{ matrix.node-version }} # Uses the Node.js versions defined in the matrix (14, 16)
 
@@ -95,7 +95,7 @@ jobs:
         run: npm test # Executes 'npm test' to run the test suite
 
       - name: Cache dependencies # Step 5: Cache Node.js dependencies
-        uses: actions/cache@v2 # Uses the actions/cache GitHub action to cache dependencies
+        uses: actions/cache@v3 # Uses the actions/cache GitHub action to cache dependencies
         with:
           path: ~/.npm # Specifies the path to the cache (Node.js modules in this case)
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} # Defines the cache key based on OS and lock file hash
@@ -103,7 +103,7 @@ jobs:
             ${{ runner.os }}-node-  # Restore cache using the OS-based prefix if the primary key is not found
 
       - name: Upload artifact # Step 6: Upload build artifacts
-        uses: actions/upload-artifact@v2 # Uses the actions/upload-artifact GitHub action to upload artifacts
+        uses: actions/upload-artifact@v4 # Uses the actions/upload-artifact GitHub action to upload artifacts
         with:
           name: build-artifact # Specifies the name of the artifact
           path: ./path/to/artifact # Specifies the path to the artifact to upload
@@ -139,11 +139,11 @@ jobs:
 
 ### 5. **Steps in the Job**:
 
-- **Checkout Code**: Uses the `actions/checkout@v2` action to retrieve the repository's code.
+- **Checkout Code**: Uses the `actions/checkout@v4` action to retrieve the repository's code.
 - **Set up Node.js**: Configures the Node.js version based on the matrix configuration.
 - **Install Dependencies**: Installs project dependencies using `npm install` with the `CI` environment variable set to `true`.
 - **Run Tests**: Executes tests with `npm test`.
-- **Cache Dependencies**: Caches the Node.js dependencies using the `actions/cache@v2` action to improve subsequent workflow speed.
+- **Cache Dependencies**: Caches the Node.js dependencies using the `actions/cache@v3` action to improve subsequent workflow speed.
 - **Upload Artifact**: Uploads an artifact (e.g., build output) to be used later in the workflow.
 
 ### 6. **Secrets**:
@@ -153,7 +153,3 @@ jobs:
 ### 7. **Notifications**:
 
 - Configures email notifications to notify the recipient (`dev@example.com`) in case the job fails.
-
-```
-
-```
